@@ -1,12 +1,7 @@
-h1 {
-    color: red;
-}
-
-
-.watch {
-    margin:50px auto;
+.clock {
+    margin:10px auto;
 	background: #34495e;
-    width:400px;
+    width:600px;
     height:180px;
     border-radius:15px;
     color:#ecf0f1;
@@ -15,10 +10,14 @@ h1 {
     padding: 20px;
 }
 
+.timeformat{
+    font-size:20px !important;
+    color:#59d1ee;
+}
+
 .lightUp{
     background: #637f9a !important;
 }
-
 
 .time{
     margin: 20px;
@@ -42,11 +41,6 @@ h1 {
     }
 }
 
-
-
-
-
-
 .buttons {
     margin-left: 50px;
     margin-right: 50px;
@@ -58,41 +52,72 @@ h1 {
 }
 
 .button-30 {
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 18px;
 }
 
 .button-30:hover {
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 .activeButton{
-  transform: translateY(2px) !important;
-  background-color: #a2a2dc !important;
+    transform: translateY(2px) !important;
+    background-color: #a2a2dc !important;
+}
+
+.timeZone{
+    font-size:20px !important;
+    color:#59d1ee;
+}
+
+.addClockButton{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    height: 36px;
+    line-height: 34px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #007c89;
+    transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
+    padding: 0 18px;
+    :hover {
+        color: #ffffff;
+        background-color: #006570;
+    }
+}
+
+.moreInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

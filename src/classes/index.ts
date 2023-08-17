@@ -1,1 +1,1 @@
-export * from './watch';
+export * from './clock';

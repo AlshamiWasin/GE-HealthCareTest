@@ -1,92 +1,197 @@
+//je ne savais pas dans quelle langue ajouter les commentaires pour expliquer le code, j'ai donc choisi de les ajouter en anglais
+
+
 import './index.css';
-import { MyClass } from './example-unit';
-import { Watch } from './classes';
+import { Clock } from './classes';
 
-const a = new MyClass(2);
-console.log('number is', a.get());
+//array to save clocks
+const clocks: Clock[] = [];
 
+//creating 2 clocks to add to the clokcs array
+const clock = new Clock();
+const clock2 = new Clock(6);
+clocks.push(clock);
+clocks.push(clock2);
 
-const watch = new Watch(0);
+//function to update all clocks
+function updateAllClocks(){
 
-console.log('watch hour is', watch.getHours());
-console.log('number minute is', watch.getMinutes());
+    //clockcontainer in which i add the clocks elements
+    const clocksContainer = document.getElementById('clocksContainer');
+    clocksContainer.innerHTML = '';
 
-const timeDisplay = document.getElementById("timeDisplay")!;
+    //going throw each clock and creating its divs and buttons
+    clocks.forEach((clock, index) => {
 
-const timeDisplayHour = document.getElementById("timeHour")!;
-const timeDisplayMinute = document.getElementById("timeMinute")!;
-const timeDisplaySecond = document.getElementById("timeSecond")!;
+        //here i create the divs and and add the css classes to some of them
 
-const modeButton = document.getElementById("modeButton")!;
-const increaseButton = document.getElementById("increaseButton")!;
-const lightButton = document.getElementById("lightButton")!;
-
-const test = document.getElementById("test")!;
-
-modeButton.addEventListener("click", function() {
-
-    watch.changeMode();
-
-    console.log(watch.getMode());
+        const timeZoneDiv = document.createElement('div');
+        timeZoneDiv.innerText = "GMT " +clock.gettimeZoneOffset();
+        timeZoneDiv.classList.add("timeZone");
 
 
-    if (watch.getMode() == "hour") {
+        const clockDiv = document.createElement('div');
+        clockDiv.classList.add('clock');
 
-        timeDisplayHour.classList.add('fadeInOut');
-        //modeButton.classList.add("activeButton")
+        const timeDislpayDiv = document.createElement('div');
+        timeDislpayDiv.classList.add('time');
 
-    }else if (watch.getMode() == "minute") {
-        timeDisplayHour.classList.remove('fadeInOut');
-        timeDisplayMinute.classList.add('fadeInOut');
-    }else{
-        timeDisplayHour.classList.remove('fadeInOut');
-        timeDisplayMinute.classList.remove('fadeInOut');
-    }
+        const hourDislpayDiv = document.createElement('div');
+        const menuteDislpayDiv = document.createElement('div');
+        const secondDislpayDiv = document.createElement('div');
+
+        const moreInformationDislpayDiv = document.createElement('div');
+        moreInformationDislpayDiv.classList.add("moreInfo");
+
+        const timeformatDislpayDiv = document.createElement('div');
+        timeformatDislpayDiv.classList.add('timeformat');
+
+        //here i display the time
+
+        hourDislpayDiv.innerText= clock.getHours()+":";
+        menuteDislpayDiv.innerText = clock.getMinutes()+":";
+        secondDislpayDiv.innerText = clock.getSeconds();
+        clock.updateToCurrentTime();
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add("buttons");
+
+        //here i created the buttons that are going to be used on the clock
+
+        //this button changes the mode when click on it , there is 3 modes (hour, minute, none).
+        const modeButton = document.createElement('button');
+        modeButton.innerText = "Mode";
+        modeButton.classList.add("button-30");
+
+        modeButton.addEventListener("click", function() {
+            clock.changeMode();
+            if (clock.getMode() == "hour") {
+                hourDislpayDiv.classList.add('fadeInOut');
+            }else if (clock.getMode() == "minute") {
+                hourDislpayDiv.classList.remove('fadeInOut');
+                menuteDislpayDiv.classList.add('fadeInOut');
+            }else{
+                hourDislpayDiv.classList.remove('fadeInOut');
+                menuteDislpayDiv.classList.remove('fadeInOut');
+            }
+
+            console.log(clock.getMode());
+
+        });
 
 
-});
+        //this button depends on the mode of the clock , if the mode is hour this button adds 1 hour , if the mode is minutes then this button adds 1 minute , if its none then this buttons dosnt do anything.
 
-lightButton.addEventListener("click", function() {
-
-    watch.changeLight();
-
-    if ( watch.getLight() == true) {
-
-        lightButton.classList.add("activeButton")
-        timeDisplay.classList.add("lightUp");
-
-    }else{
-
-        lightButton.classList.remove("activeButton")
-        timeDisplay.classList.remove("lightUp");
-    }
+        const increaseButton = document.createElement('button');
+        increaseButton.innerText = "Increase";
+        increaseButton.classList.add("button-30");
+        increaseButton.addEventListener("click", function() {
+            if ( clock.getMode() != "none") {
+                clock.increase();
+                hourDislpayDiv.innerText= clock.getHours()+":";
+                menuteDislpayDiv.innerText = clock.getMinutes()+":";
+                secondDislpayDiv.innerText = clock.getSeconds();
+            }
+        });
 
 
+        //this button resets the time on the button
+        const resetButton = document.createElement('button');
+        resetButton.classList.add("button-30");
+        resetButton.innerText = "Reset";
+        resetButton.addEventListener("click", function() {
+            clock.reset()
+        });
+
+        //this button switchs between the 24h format and the am/pm format
+        const hourFormatButton = document.createElement('button');
+        hourFormatButton.classList.add("button-30");
+        hourFormatButton.innerText = "24H - Am/Pm";
+        hourFormatButton.addEventListener("click", function() {
+            clock.changeHourFormat();
+            if ( clock.getHourFormat() == "24h") {
+                timeformatDislpayDiv.innerText = "24h";
+            }else{
+                timeformatDislpayDiv.innerText = clock.getAmOrPm();
+            }
+            updateAllClocks();
+        });
+
+        //this button lights up the backgroud of the time , when clicked it stays active
+        const lightButton = document.createElement('button');
+        lightButton.innerText = "Light";
+        lightButton.classList.add("button-30");
+        lightButton.addEventListener("click", function() {
+            clock.changeLight();
+            if ( clock.getLight() == true) {
+                lightButton.classList.add("activeButton")
+                timeDislpayDiv.classList.add("lightUp");
+            }else{
+                lightButton.classList.remove("activeButton")
+                timeDislpayDiv.classList.remove("lightUp");
+            }
+        });
 
 
-});
+        if (clock.getMode() == "hour") {
+            hourDislpayDiv.classList.add('fadeInOut');
+        }else if (clock.getMode() == "minute") {
+            hourDislpayDiv.classList.remove('fadeInOut');
+            menuteDislpayDiv.classList.add('fadeInOut');
+        }else{
+            hourDislpayDiv.classList.remove('fadeInOut');
+            menuteDislpayDiv.classList.remove('fadeInOut');
+        }
 
-increaseButton.addEventListener("click", function() {
-    if ( watch.getMode() != "none") {
-        watch.increase();
+        if ( clock.getLight() == true) {
+            lightButton.classList.add("activeButton")
+            timeDislpayDiv.classList.add("lightUp");
+        }else{
+            lightButton.classList.remove("activeButton")
+            timeDislpayDiv.classList.remove("lightUp");
+        }
 
-        timeDisplayHour.innerText= watch.getHours();
-        timeDisplayMinute.innerText = watch.getMinutes();
-        timeDisplaySecond.innerText = watch.getSeconds();
-    }
-});
 
-function updateDisplay() {
-    if (watch.getMode() == "none") {
-        timeDisplayHour.innerText= watch.getHours();
-        timeDisplayMinute.innerText = watch.getMinutes();
-        timeDisplaySecond.innerText = watch.getSeconds();
-        watch.updateToCurrentTime();
-    }
+        if ( clock.getHourFormat() == "24h") {
+            timeformatDislpayDiv.innerText = "24h"
+        }else{
+            timeformatDislpayDiv.innerText = clock.getAmOrPm();
+        }
+
+
+        //here i append the created divs and buttons into their positions
+
+        clockDiv.appendChild(timeDislpayDiv);
+        timeDislpayDiv.appendChild(hourDislpayDiv);
+        timeDislpayDiv.appendChild(menuteDislpayDiv);
+        timeDislpayDiv.appendChild(secondDislpayDiv);
+        timeDislpayDiv.appendChild(timeformatDislpayDiv);
+
+        moreInformationDislpayDiv.appendChild(timeformatDislpayDiv);
+        moreInformationDislpayDiv.appendChild(timeZoneDiv);
+
+        timeDislpayDiv.appendChild(moreInformationDislpayDiv);
+
+        clockDiv.appendChild(buttonsDiv);
+        buttonsDiv.appendChild(modeButton);
+        buttonsDiv.appendChild(increaseButton);
+        buttonsDiv.appendChild(resetButton);
+        buttonsDiv.appendChild(hourFormatButton);
+        buttonsDiv.appendChild(lightButton);
+
+        clocksContainer.appendChild(clockDiv);
+    })
 }
 
-setInterval(updateDisplay, 1000);
+//this button and select helps me create new clocks
+const addClockButton = document.getElementById('addClockButton');
+const gmtSelect = document.getElementById("gmtSelect")as HTMLSelectElement;
 
+addClockButton.addEventListener("click", function() {
+    const newClock = new Clock(parseInt(gmtSelect.value));
+    clocks.push(newClock);
+    updateAllClocks();
+});
 
-
-
+//every second i update and display all the clocks
+setInterval(updateAllClocks, 1000);
