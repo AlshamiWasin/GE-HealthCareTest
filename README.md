@@ -13,7 +13,7 @@ i was not sure if i should make a hand watch or a actual clock , so i chose to m
 
 functions i could have implemented:
 
-1. A function remove or delete a clock.
+1. A function to remove or delete a clock.
 2. A function to switch the gmt offset of a watch.
 
 thank you for the test
