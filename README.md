@@ -15,5 +15,5 @@ functions i could have implemented:
 
 1. A function to remove or delete a clock.
 2. A function to switch the gmt offset of a watch.
-
-thank you for the test
+3. Input validation for the GMT offset that (only allowsfrom -12 to +14)
+   thank you for the test
