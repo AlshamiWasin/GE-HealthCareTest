@@ -17,6 +17,8 @@ functions i could have implemented:
 2. A function to switch the gmt offset of a watch.
 3. Input validation for the GMT offset that (only allowsfrom -12 to +14)
    thank you for the test
+4. Create a app class where I can have the displpay clock functions inside
+   
 
 Class diagram:
    
